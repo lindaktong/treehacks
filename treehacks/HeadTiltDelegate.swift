@@ -52,7 +52,7 @@ class HeadTiltDetector: NSObject, ObservableObject, CMHeadphoneMotionManagerDele
             guard let self = self, let deviceMotion = deviceMotion else { return }
             
             // Debug print to see if you're getting roll data
-            print("Roll: \(deviceMotion.attitude.roll * 180 / .pi)°")
+//            print("Roll: \(deviceMotion.attitude.roll * 180 / .pi)°")
             
             self.handleDeviceMotion(deviceMotion)
         }
@@ -80,7 +80,7 @@ class HeadTiltDetector: NSObject, ObservableObject, CMHeadphoneMotionManagerDele
         tiltDeg = self.roll
         
         // Debug print orientation values
-        print("yaw: \(self.yaw) deg, roll: \(self.roll) deg, pitch: \(self.pitch) deg")
+//        print("yaw: \(self.yaw) deg, roll: \(self.roll) deg, pitch: \(self.pitch) deg")
         
         // Check tilt thresholds using the updated roll value
         let tiltThresholdMet = self.roll < -tiltThresholdDeg

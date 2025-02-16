@@ -7,11 +7,20 @@
 
 import SwiftUI
 
+//@main
+//struct treehacksApp: App {
+//    var body: some Scene {
+//        WindowGroup {
+//            ContentView()
+//        }
+//    }
+//}
+
 @main
 struct treehacksApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            SplashScreenView()
         }
     }
 }
