@@ -8,17 +8,43 @@
 import SwiftUI
 
 struct ContentView: View {
+    @StateObject private var headTiltDetector = HeadTiltDetector()
+
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
-        }
-        .padding()
-    }
-}
+            Text("Tilt Angle: \(headTiltDetector.tiltDeg, specifier: "%.2f")°")
+                .font(.largeTitle)
+                .padding()
 
-#Preview {
-    ContentView()
+            if headTiltDetector.isTilting {
+                Text("🟢 Tilting Detected!")
+                    .foregroundColor(.green)
+                    .bold()
+            } else {
+                Text("⚪️ No Tilt")
+                    .foregroundColor(.gray)
+            }
+
+            Button(action: {
+                if headTiltDetector.isTracking {
+                    headTiltDetector.stopDetectingHeadTilt()
+                } else {
+                    headTiltDetector.startDetectingHeadTilt()
+                }
+            }) {
+                Text(headTiltDetector.isTracking ? "Stop Tracking" : "Start Tracking")
+                    .padding()
+                    .background(headTiltDetector.isTracking ? Color.red : Color.blue)
+                    .foregroundColor(.white)
+                    .cornerRadius(10)
+            }
+            .padding()
+        }
+        .onAppear {
+            headTiltDetector.startDetectingHeadTilt()
+        }
+        .onDisappear {
+            headTiltDetector.stopDetectingHeadTilt()
+        }
+    }
 }

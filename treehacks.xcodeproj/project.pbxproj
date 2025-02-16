@@ -29,9 +29,22 @@
 		BFC857AF2D615C5E0074596E /* treehacksUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = treehacksUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		BFC857C82D6161290074596E /* Exceptions for "treehacks" folder in "treehacks" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = BFC857942D615C5D0074596E /* treehacks */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		BFC857972D615C5D0074596E /* treehacks */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				BFC857C82D6161290074596E /* Exceptions for "treehacks" folder in "treehacks" target */,
+			);
 			path = treehacks;
 			sourceTree = "<group>";
 		};
@@ -399,6 +412,8 @@
 				DEVELOPMENT_TEAM = JV2U2W8DCL;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = treehacks/Info.plist;
+				INFOPLIST_KEY_NSMotionUsageDescription = "This app uses motion data from your AirPods to detect head tilts for hands-free interaction.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -428,6 +443,8 @@
 				DEVELOPMENT_TEAM = JV2U2W8DCL;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = treehacks/Info.plist;
+				INFOPLIST_KEY_NSMotionUsageDescription = "This app uses motion data from your AirPods to detect head tilts for hands-free interaction.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
