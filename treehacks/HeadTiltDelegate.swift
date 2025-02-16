@@ -14,6 +14,10 @@ protocol HeadTiltDelegate: AnyObject {
     func endTilt()
 }
 
+
+
+
+
 class HeadTiltDetector: NSObject, ObservableObject, CMHeadphoneMotionManagerDelegate {
     private let motionManager = CMHeadphoneMotionManager()
     private let tiltThresholdDeg = 28.0
@@ -63,6 +67,8 @@ class HeadTiltDetector: NSObject, ObservableObject, CMHeadphoneMotionManagerDele
     func headphoneMotionManagerDidDisconnect(_ manager: CMHeadphoneMotionManager) {
         headphonesConnected = false
     }
+    
+    
     
     private func handleDeviceMotion(_ deviceMotion: CMDeviceMotion) {
         // Update the published orientation values in degrees

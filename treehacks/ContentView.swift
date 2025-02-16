@@ -1,4 +1,5 @@
 import SwiftUI
+import AVFoundation
 
 /// A small struct that holds yaw and pitch values.
 /// Marked `Equatable` so we can use `onChange(of:)`.
@@ -7,6 +8,7 @@ struct YawPitch: Equatable {
     let pitch: Double
 }
 
+
 struct ContentView: View {
     @StateObject private var headTiltDetector = HeadTiltDetector()
     
@@ -14,6 +16,7 @@ struct ContentView: View {
     @State private var squarePosition: CGPoint = .zero
     @State private var squareColor: Color = .black
     @State private var collisionDetected = false
+    @State private var audioPlayer: AVAudioPlayer?
     
     let squareSize: CGFloat = 50
     
@@ -70,6 +73,8 @@ struct ContentView: View {
         }
     }
     
+    
+    
     // MARK: - Mapping Functions
     
     /// Convert yaw (±45°) into a horizontal screen position (0...width).
@@ -97,6 +102,27 @@ struct ContentView: View {
     
     // MARK: - Collision Detection
     
+    private func playSound(_ soundFileName: String) {
+        guard let url = Bundle.main.url(forResource: soundFileName, withExtension: nil) else {
+            print("Unable to find the sound file: \(soundFileName)")
+            return
+        }
+        
+        do {
+            let player = try AVAudioPlayer(contentsOf: url)
+            player.prepareToPlay()
+            player.play()
+            
+            DispatchQueue.main.async {
+                self.audioPlayer = player
+            }
+            
+            print("played!")
+        } catch {
+            print("Error playing sound: \(error.localizedDescription)")
+        }
+    }
+    
     /// Checks if the dot collides with the square.
     /// If collision occurs, turn square green, wait 3s, then move it & revert to black.
     private func checkCollision(dotX: CGFloat, dotY: CGFloat, geometrySize: CGSize) {
@@ -104,24 +130,26 @@ struct ContentView: View {
             abs(dotX - squarePosition.x) < squareSize / 2 &&
             abs(dotY - squarePosition.y) < squareSize / 2 {
             
-            collisionDetected = true
-            squareColor = .green
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                // Random new position for the square
-                squarePosition = CGPoint(
-                    x: CGFloat.random(in: squareSize/2 ... geometrySize.width - squareSize/2),
-                    y: CGFloat.random(in: squareSize/2 ... geometrySize.height - squareSize/2)
-                )
-                squareColor = .black
-                collisionDetected = false
+            DispatchQueue.main.async {
+                self.collisionDetected = true
+                self.squareColor = .green
+                self.playSound("point.mp3")
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                    self.squarePosition = CGPoint(
+                        x: CGFloat.random(in: self.squareSize/2 ... geometrySize.width - self.squareSize/2),
+                        y: CGFloat.random(in: self.squareSize/2 ... geometrySize.height - self.squareSize/2)
+                    )
+                    self.squareColor = .black
+                    self.collisionDetected = false
+                }
             }
         }
     }
-}
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
+    
+    struct ContentView_Previews: PreviewProvider {
+        static var previews: some View {
+            ContentView()
+        }
     }
 }
